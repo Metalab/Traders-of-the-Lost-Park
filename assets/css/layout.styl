@@ -1,0 +1,47 @@
+
+body {
+  background-color: white;
+  color: black;
+  font-family: 'Fondamento', cursive;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #00F;
+}
+
+#game {
+  margin: 0 auto;
+  position: relative;
+  z-index: 2200;
+}
+
+header, #header {
+  padding: 12px 6px 6px 5px;
+  h1 {
+    margin: 0;
+    padding: 5px 0 0 0;
+    letter-spacing: 2px;
+    color: black;
+    text-shadow: 1px 1px #555;
+    display: inline;
+  }
+  background-color: #DDDDFF;
+  z-index: 2000;
+  position: absolute;
+  display: inline;
+  @include round_borders;
+  border-top: none;
+  border-left: none;
+}
+footer, #footer {
+  position: fixed;
+  bottom: 0;
+  padding: 2px 10px;
+  z-index: 2000;
+  background-color: #DDDDFF;
+  @include round_borders;
+  border-bottom: none;
+  border-left: none;
+}

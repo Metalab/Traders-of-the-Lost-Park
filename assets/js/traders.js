@@ -1,0 +1,13 @@
+//= require lib/zepto.min
+//= require lib/underscore-min
+//= require lib/backbone-min
+//= require lib/audio.js
+//= require lib/jsfx.js
+//= require lib/jsfxlib.js
+//= require lib/jaws
+//= require traders-backbone
+//= require google-analytics
+//= require_tree ./controllers
+//= require_tree ./models
+//= require_tree ./views
+//= require_tree ./cards
