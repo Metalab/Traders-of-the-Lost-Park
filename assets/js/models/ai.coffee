@@ -7,4 +7,5 @@ class Traders.Models.AI extends Backbone.Model
     @
 
   action: ->
-    console.log(@name);
+    r = (s) -> Math.floor(Math.random() * s);
+    @game.fieldClicked(r(@game.table.length), r(@game.table.length))

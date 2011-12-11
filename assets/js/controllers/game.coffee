@@ -13,9 +13,9 @@ class Traders.Controllers.Game
     _.extend(@, @defaults)
     @.sounds = new Traders.Controllers.Sounds()
     @.players = new Traders.Controllers.Players
-    @.players.push(new Traders.Models.Player({name: 'Player'}))
-    @.players.push(new Traders.Models.AI({name: 'Computer 1'}))
-    @.players.push(new Traders.Models.AI({name: 'Computer 2'}))
+    @.players.push(new Traders.Models.Player({name: 'Player', game: @}))
+    @.players.push(new Traders.Models.AI({name: 'Computer 1', game: @}))
+    @.players.push(new Traders.Models.AI({name: 'Computer 2', game: @}))
     @.player = @.players[0]
 
     r = -> Math.floor(Math.random()* 5000000000)
@@ -38,11 +38,14 @@ class Traders.Controllers.Game
     @players.current()
 
   fieldClicked: (row, col)->
-    if @players.current() != @player
-      return false
     el =  @table[row][col]
     if el.amount
-      @player.networth += el.amount
+      @currentPlayer().networth += el.amount
       el.amount = 0
-    @players.next()
-    
+      if @isTurn()
+        @players.next()
+      return true
+    return false
+
+  isTurn: ->
+    @players.current() == @player

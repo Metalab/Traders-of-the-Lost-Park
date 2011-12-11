@@ -73,6 +73,8 @@ class Traders.Views.Game extends Backbone.View
     #
 
   fieldClicked: (row, col)->
+    if ! @game.isTurn()
+      return
     el = @game.table[row][col]
     if el.sprite
       el.sprite.remove()
