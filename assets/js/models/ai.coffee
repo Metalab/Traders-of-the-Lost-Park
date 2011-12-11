@@ -5,3 +5,6 @@ class Traders.Models.AI extends Backbone.Model
   initialize: (opts) ->
     _.extend(@, opts)
     @
+
+  action: ->
+    console.log(@name);

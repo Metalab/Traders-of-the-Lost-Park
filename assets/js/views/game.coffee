@@ -77,7 +77,5 @@ class Traders.Views.Game extends Backbone.View
     if el.sprite
       el.sprite.remove()
       el.sprite = null
-    if el.amount
-      @game.currentPlayer().networth += el.amount
-      el.amount = 0
+    @game.fieldClicked(row,col)
     
