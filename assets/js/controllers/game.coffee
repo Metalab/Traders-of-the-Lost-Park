@@ -37,12 +37,16 @@ class Traders.Controllers.Game
     @players.current()
 
   fieldClicked: (row, col)->
-    el =  @table[row][col]
+    el = @table[row][col]
+    if !el
+      return false
+    if el.sprite
+      el.sprite.remove()
     if el.amount
       @currentPlayer().networth += el.amount
       el.amount = 0
+      @takeCard()
       if @isTurn()
-        @takeCard()
         @players.next()
       return true
     return false
@@ -52,4 +56,9 @@ class Traders.Controllers.Game
 
   takeCard: ->
     c = Traders.Cards.Base.random()
-    @players.current().cards.push new c()
+    if @players.current().cards.length <= 5
+      @players.current().cards.push new c()
+
+  placeCard: (row, col, card) ->
+    @view.placeCard(row, col, card)
+    @table[row][col] = card

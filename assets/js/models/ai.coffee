@@ -4,7 +4,9 @@ class Traders.Models.AI extends Traders.Models.Player
 
   action: ->
     r = (s) -> Math.floor(Math.random() * s);
-    if @cards.length > 0
-    else
-      @game.takeCard()
-      @game.fieldClicked(r(@game.table.length), r(@game.table.length))
+    row = r(@game.table.length)
+    col = r(@game.table.length)
+    console.log(@cards.length);
+    if ! @game.fieldClicked(row, col)
+      if @cards.length > 0
+        @game.placeCard(row, col, @cards[Math.floor(Math.random()*@cards.length)])

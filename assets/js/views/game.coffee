@@ -48,7 +48,6 @@ class Traders.Views.Game extends Backbone.View
     clearTimeout(@clearing)
 
   drawTable: ->
-
     for r in [0...@table.rows]
       row = @game.table[r]
       for c in [0...(@table.cols)]
@@ -56,6 +55,10 @@ class Traders.Views.Game extends Backbone.View
           sprite = new Traders.Cards.Dollar({x: @table.x+@.table.size*c, y: @table.y+@table.size*r})
           row[c] = {amount: row[c], sprite: sprite}
           @sprites.push sprite
+
+  placeCard: (row, col, card) ->
+    card.sprite.moveTo(@table.x+col*@table.size, @table.y+row*@table.size)
+    @sprites.push card
 
   dragDown: (event) ->
     if @table.rect.collidePoint(jaws.mouse_x, jaws.mouse_y)
