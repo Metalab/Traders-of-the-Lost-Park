@@ -20,4 +20,4 @@ class Traders.Views.Cards
     @cards()[i]
 
   cards: ->
-    @player.cards
+    _.compact(@player.cards)

@@ -18,9 +18,8 @@ class Traders.Controllers.Game
     @.players.push(new Traders.Models.AI({name: 'Computer 2', game: @}))
     @.player = @.players[0]
 
-    r = -> Math.floor(Math.random()* 5000000000)
     @table = []
-    @table.push(r() for i in [0...5]) for j in [0...5]
+    @table.push(@bigMoney() for i in [0...5]) for j in [0...5]
     jaws.view = new Traders.Views.Game({game: @})
     @.view = jaws.view
 
@@ -40,14 +39,22 @@ class Traders.Controllers.Game
     el = @table[row][col]
     if !el
       return false
-    if el.sprite
-      el.sprite.remove()
+    if el.cost
+      if @currentPlayer().networth > el.cost
+        @currentPlayer().networth -= el.cost
+        @currentPlayer().cards.push(el.sprite)
+        @table[row][col] = {}
+        return true
+      else
+        return false
+
     if el.amount
       @currentPlayer().networth += el.amount
-      el.amount = 0
       @takeCard()
       if @isTurn()
         @players.next()
+      el.sprite.remove() if el.sprite
+      @table[row][col] = null
       return true
     return false
 
@@ -60,5 +67,12 @@ class Traders.Controllers.Game
       @players.current().cards.push new c()
 
   placeCard: (row, col, card) ->
-    @view.placeCard(row, col, card)
-    @table[row][col] = card
+    new_card = _.clone(card)
+    @table[row][col] = {cost: @bigMoney(), sprite: new_card}
+    @view.placeCard(row, col, new_card)
+    card = null
+    @currentPlayer().cards = _.compact(@currentPlayer().cards)
+
+  bigMoney: ->
+    Math.floor(Math.random()* 5000000000)
+    

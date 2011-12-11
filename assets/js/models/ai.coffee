@@ -6,7 +6,6 @@ class Traders.Models.AI extends Traders.Models.Player
     r = (s) -> Math.floor(Math.random() * s);
     row = r(@game.table.length)
     col = r(@game.table.length)
-    console.log(@cards.length);
     if ! @game.fieldClicked(row, col)
       if @cards.length > 0
         @game.placeCard(row, col, @cards[Math.floor(Math.random()*@cards.length)])

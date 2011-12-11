@@ -28,6 +28,8 @@ class Traders.Cards.Base
     @sprite.draw() if @sprite
 
   remove: ->
+    if !@sprite
+      return
     c = @sprite.context
     c.save()
     c.fillStyle = '#FFFFFF'
