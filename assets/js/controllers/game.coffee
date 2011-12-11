@@ -21,7 +21,6 @@ class Traders.Controllers.Game
     r = -> Math.floor(Math.random()* 5000000000)
     @table = []
     @table.push(r() for i in [0...5]) for j in [0...5]
-
     jaws.view = new Traders.Views.Game({game: @})
     @.view = jaws.view
 
@@ -43,9 +42,14 @@ class Traders.Controllers.Game
       @currentPlayer().networth += el.amount
       el.amount = 0
       if @isTurn()
+        @takeCard()
         @players.next()
       return true
     return false
 
   isTurn: ->
     @players.current() == @player
+
+  takeCard: ->
+    c = Traders.Cards.Base.random()
+    @players.current().cards.push new c()

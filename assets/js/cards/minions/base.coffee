@@ -1,5 +1,5 @@
 Traders.Cards.Minions ||= {}
 
-class Traders.Cards.Minions.Base extends Backbone.Model
+class Traders.Cards.Minions.Base extends Traders.Cards.Base
   name: ""
   description: ""

@@ -21,7 +21,6 @@ $(document).ready ->
     winW = window.innerWidth
     winH = window.innerHeight
   $('[name=player_name]').focus()
-  jaws.assets.add("/images/card-dollar.png")
 
   jaws.start(window.game, {fps: 5})
 

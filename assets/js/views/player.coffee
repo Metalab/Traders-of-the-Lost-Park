@@ -17,7 +17,7 @@ class Traders.Views.Player extends Backbone.View
     x = ((@pos * w) % jaws.height)
     y = 10 + (Math.floor(@pos / jaws.height) * h)
     @.context.save()
-    @.context.translate(x,y)
+    @.context.translate(x+2,y+2)
     @.context.strokeStyle = "black"
     @.context.strokeRect(0, 0, w-10, h)
     @.context.fillStyle = @color

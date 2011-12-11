@@ -1,11 +1,10 @@
-class Traders.Models.AI extends Backbone.Model
+#= require 'player'
+class Traders.Models.AI extends Traders.Models.Player
   name: 'Computer'
-  networth: 0
-
-  initialize: (opts) ->
-    _.extend(@, opts)
-    @
 
   action: ->
     r = (s) -> Math.floor(Math.random() * s);
-    @game.fieldClicked(r(@game.table.length), r(@game.table.length))
+    if @cards.length > 0
+    else
+      @game.takeCard()
+      @game.fieldClicked(r(@game.table.length), r(@game.table.length))

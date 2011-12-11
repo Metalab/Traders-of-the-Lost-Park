@@ -27,6 +27,7 @@ class Traders.Views.Game extends Backbone.View
     (new Traders.Views.Player({player: player, pos: (pos), context: @context}); pos+=1) for player in @.game.players
     @clear()
     @.drawTable()
+    @cards = new Traders.Views.Cards({context: @context, player: @game.player})
     @
 
   restart: ->
@@ -39,6 +40,7 @@ class Traders.Views.Game extends Backbone.View
     @clear()
     player.view.render() for player in @.game.players
     (sprite.update(); sprite.draw()) for sprite in @sprites
+    @cards.draw()
 
   gameOver: () ->
     @render()
@@ -54,14 +56,6 @@ class Traders.Views.Game extends Backbone.View
           sprite = new Traders.Cards.Dollar({x: @table.x+@.table.size*c, y: @table.y+@table.size*r})
           row[c] = {amount: row[c], sprite: sprite}
           @sprites.push sprite
-
-  drawCards: ->
-    @context.save()
-    @context.translate(20, 410)
-    #for i in [0..(@game.player.cards.length)]
-      #
-    @context.restore()
-    #
 
   dragDown: (event) ->
     if @table.rect.collidePoint(jaws.mouse_x, jaws.mouse_y)
