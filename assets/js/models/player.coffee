@@ -1,4 +1,4 @@
-class window.Traders.Models.Player extends Backbone.Model
-  defaults:
-    name: null
-    score: 0
+class Traders.Models.Player extends Backbone.Model
+  name: 'Player'
+  networth: 0.1
+  cards: []

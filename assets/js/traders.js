@@ -1,4 +1,4 @@
-//= require lib/zepto.min
+//= require lib/zepto
 //= require lib/underscore-min
 //= require lib/backbone-min
 //= require lib/audio.js

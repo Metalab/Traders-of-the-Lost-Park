@@ -6,8 +6,9 @@ window.Traders =
   Cards: {}
 
 
+
 $(document).ready ->
-  window.game = new Traders.Views.Game.Start()
+  window.game = new Traders.Controllers.Game()
   if document.body && document.body.offsetWidth
     winW = document.body.offsetWidth
     winH = document.body.offsetHeight
@@ -19,7 +20,9 @@ $(document).ready ->
   if (window.innerWidth && window.innerHeight)
     winW = window.innerWidth
     winH = window.innerHeight
-
-  $('#main').attr('height', winH).attr('width', winW);
   $('[name=player_name]').focus()
+  jaws.assets.add("/images/card-dollar.png")
+
+  jaws.start(window.game, {fps: 5})
+
   true

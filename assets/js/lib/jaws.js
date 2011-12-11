@@ -128,8 +128,8 @@ function saveMousePosition(e) {
   jaws.mouse_y = (e.pageY || e.clientX)
   
   var game_area = jaws.canvas ? jaws.canvas : jaws.dom
-  jaws.mouse_x -= game_area.offsetLeft
-  jaws.mouse_y -= game_area.offsetTop
+  jaws.mouse_x -= game_area.offset().left
+  jaws.mouse_y -= game_area.offset().top
 }
 
 /** 

@@ -2,17 +2,13 @@
 express = require('express')
 app = express.createServer()
 
-app.use require('connect-assets')()
-app.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
+app.use require('connect-assets')({detectChanges: true})
 app.set('view engine', 'jade')
 
 app.configure 'development', ->
-  app.use(express.static(__dirname + '/public'));
-  app.use(express.compiler({ src: __dirname + '/public', enable: ['less'] }));
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
 
-app.configure 'production', ->
-  app.use(express.static(__dirname + '/public', { maxAge: 31557600000 }));
-  app.use(express.errorHandler());
+app.use(express.static(__dirname + '/public'));
 
 app.get '/', (req, res, next) ->
   res.render('index.jade')
