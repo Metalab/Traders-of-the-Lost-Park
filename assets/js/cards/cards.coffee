@@ -27,12 +27,9 @@ class Traders.Cards.Base
   draw: ->
     @sprite.draw() if @sprite
 
-  remove: ->
-    if !@sprite
-      return
+  clear: ->
     c = @sprite.context
     c.save()
     c.fillStyle = '#FFFFFF'
     c.fillRect(@sprite.rect)
     c.restore()
-    @sprite = null

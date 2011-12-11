@@ -26,6 +26,5 @@ class Traders.Views.Player extends Backbone.View
     @.context.fillText(@player.name, 5, h/2-5)
     @.context.translate(0,h-10)
     @.context.textAlign = 'right'
-    @.context.fillText("$" + Math.floor(@player.networth), w-20, 0)
+    @.context.fillText("$M " + Math.floor(@player.networth/100) * 100, w-20, 0)
     @.context.restore()
-    

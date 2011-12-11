@@ -9,3 +9,9 @@ class Traders.Models.Player extends Backbone.Model
 
   action: ->
     #
+  winByCards: ->
+    if @cards.length == 5
+      name = @cards[0].name
+      for i in [1...@cards.length]
+        return false if @cards[i].name != name
+      return true

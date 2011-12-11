@@ -5,6 +5,7 @@ class Traders.Controllers.Game
     table: null
     players: []
     player: null
+    dollars_left: true
 
   constructor: ->
     @
@@ -19,12 +20,22 @@ class Traders.Controllers.Game
     @.player = @.players[0]
 
     @table = []
-    @table.push(@bigMoney() for i in [0...5]) for j in [0...5]
+    @table.push({amount: @bigMoney()} for i in [0...5]) for j in [0...5]
+    @dollars_left = 25
     jaws.view = new Traders.Views.Game({game: @})
     @.view = jaws.view
 
   update: ->
-    (player.networth = player.networth * 1.0001) for player in @players
+    return if @winner
+    if @dollars_left == 0
+      @winner = @players[0]
+      (if @winner.networth < player.networth then @winner = player) for player in @players
+      Traders.Views.Winner.draw(@winner)
+      jaws.game_loop.stop()
+    if @currentPlayer().winByCards()
+      @winner = @currentPlayer()
+      Traders.Views.Winner.draw(@currentPlayer())
+      jaws.game_loop.stop()
     if @players.current() != @player
       @players.current().action()
       @players.next() != @player
@@ -38,24 +49,35 @@ class Traders.Controllers.Game
   fieldClicked: (row, col)->
     el = @table[row][col]
     if !el
+      if @isTurn()
+        @sounds.play('error')
       return false
     if el.cost
-      if @currentPlayer().networth > el.cost
+      if @currentPlayer().networth > el.cost && @currentPlayer().cards.length < 5
         @currentPlayer().networth -= el.cost
         @currentPlayer().cards.push(el.sprite)
         @table[row][col] = {}
+        @sounds.play('tile')
         return true
       else
+        if @isTurn()
+          @sounds.play('error')
         return false
 
     if el.amount
+      @dollars_left -= 1
       @currentPlayer().networth += el.amount
       @takeCard()
       if @isTurn()
         @players.next()
-      el.sprite.remove() if el.sprite
+      el.sprite.clear()
+      el.sprite = null
+      el.amount = null
       @table[row][col] = null
+      @sounds.play('money')
       return true
+    if @isTurn()
+      @sounds.play('error')
     return false
 
   isTurn: ->
@@ -63,16 +85,17 @@ class Traders.Controllers.Game
 
   takeCard: ->
     c = Traders.Cards.Base.random()
-    if @players.current().cards.length <= 5
+    if @players.current().cards.length < 5
       @players.current().cards.push new c()
 
   placeCard: (row, col, card) ->
     new_card = _.clone(card)
     @table[row][col] = {cost: @bigMoney(), sprite: new_card}
     @view.placeCard(row, col, new_card)
-    card = null
     @currentPlayer().cards = _.compact(@currentPlayer().cards)
+    if @isTurn()
+      @players.next()
 
   bigMoney: ->
-    Math.floor(Math.random()* 5000000000)
+    Math.floor(Math.random()* 5000)
     
