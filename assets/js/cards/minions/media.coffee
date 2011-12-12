@@ -1,3 +1,4 @@
+#= require 'base'
 Traders.Cards.Minions ||= {}
 jaws.assets.add("/images/card-media.png")
 

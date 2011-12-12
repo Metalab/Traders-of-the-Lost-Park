@@ -1,3 +1,4 @@
+#= require 'cards'
 jaws.assets.add("/images/card-dollar.png")
 
 class Traders.Cards.Dollar extends Traders.Cards.Base

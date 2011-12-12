@@ -1,3 +1,4 @@
+#= require 'base'
 Traders.Cards.Personae ||= {}
 
 class Traders.Cards.Personae.Monty extends Traders.Cards.Personae.Base
